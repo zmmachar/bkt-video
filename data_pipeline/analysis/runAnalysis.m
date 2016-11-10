@@ -53,7 +53,6 @@ filename = files{i}
   withCountErr{i} = analysis.getMeanAttemptError(withResourceResults{i}.errorByResourceCount);
 
 
-end
 
 summarizeResults
 
