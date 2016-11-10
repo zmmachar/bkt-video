@@ -1,6 +1,4 @@
 function [models, likelihoods] = trainModels( formattedData , iterations)
-%TRAINMODELS Summary of this function goes here
-%   Detailed explanation goes here
     numberOfExercises = size(formattedData, 1);
     models = cell(numberOfExercises, 1);
     likelihoods = ones(numberOfExercises, 1);

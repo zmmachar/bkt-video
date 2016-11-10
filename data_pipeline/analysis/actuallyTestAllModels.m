@@ -13,12 +13,8 @@ function [accuracy, rmses, errorPerAttempt, errorByResourceCount, errorByTraceLe
         if ~mod(i, 50)
             fprintf('testing for exercise %d\n', i);
         end
-        %Repeatedly adding things to analyze has led to this sorry state
-        %apologies to whoever is trying to interpret this
-        %I am looking at:
         %acc: raw 'accuracy' of prediction
-        %rmse: calculated sum of root mean squared errors.  TODO: poorly
-        %named
+        %rmse: calculated sum of root mean squared errors.  
         %count: just number of predictions made by exercise
         %errorPerAttempt: 1x5 array listing RMSE for the 1st-4+th individual attempt
         %errorByResourceCount: 1x5 array, separates out calculated RMSE by number of resources in trace

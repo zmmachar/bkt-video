@@ -11,20 +11,17 @@ function  [withResourceFormattedData, noResourceFormattedData, oneResourceFormat
     withResourceFormattedData = withResourceFormattedData(hasVideoIdx);
     exercises = exercises(hasVideoIdx);
     perExerciseTraces = perExerciseTraces(hasVideoIdx);
-%Now, load the data for the one resource model and the no resource model, already having filtered out potentially problematic exercises
+   %Now, load the data for the one resource model and the no resource model, already having filtered out potentially problematic exercises
     oneResourceFormattedData = parsing.formatAndFilterExerciseData(...
         perExerciseTraces, @parsing.translateRawExerciseWithOneResource, exercises, subpartThreshold);
     noResourceFormattedData = parsing.formatAndFilterExerciseData(...
         perExerciseTraces, @parsing.translateRawExerciseNoResourceWithSubparts, exercises, subpartThreshold);
     
         
-    %do some awkward manipulation to add some diagnostic info about
+    %add some diagnostic info about
     %resource counts to no-resource data
-    %excuse the sloppy iterative loop
     
     for i=1:length(withResourceFormattedData)
-        %go ahead and add it to the withResource data just to simplify
-        %later analysis
         withResourceFormattedData{i}.resourceCounts = parsing.getResourceCounts(withResourceFormattedData{i});
         noResourceFormattedData{i}.resourceCounts = removeAllResourceTraceCounts(withResourceFormattedData{i});
         oneResourceFormattedData{i}.resourceCounts = withResourceFormattedData{i}.resourceCounts;
@@ -36,6 +33,3 @@ function filteredResourceCounts = removeAllResourceTraceCounts(data)
     %resources for models not using them
     filteredResourceCounts = data.resourceCounts(data.resourceCounts ~= data.lengths);
 end
-% [oneResourceFormattedData, exercises] = formatExerciseData(perExerciseTraces, @translateRawExerciseWithOneResource, exercises, subpartThreshold);
-% [one.err, one.accuracy, one.testAccFull, one.trainAccFull, one.testErrFull, one.trainErrFull] = partitionTrainAndTest(oneResourceFormattedData, 5);
-% oneModels = trainModels(oneResourceFormattedData, 25);
