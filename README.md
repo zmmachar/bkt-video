@@ -13,10 +13,12 @@ Feel free to email me any questions at zack.machardy@gmail.com
 This code consists of two major parts.  The first, found in the data\_pipeline/scripts directory, is python code that performs preprocessing on the raw data to transform it into a more easily usable format.  The second, found in the data\_pipeline/analysis directory, is matlab code which uses the output from the python scripts and actually runs the BKT model training and testing.
 
 **Data Parsing**
+
 Two files in the scripts directory, **aggregate\_user\_khan** and **trace\_generator\_khan** perform preliminary data parsing for the analysis code.
 Specifically, aggregate\_user\_khan first takes the raw log data, which is roughly, though not 100% reliably, sorted by timestamp, and organizes it by user and time.   trace\_generator\_khan takes the data thus aggregated and performs two tasks.  First, it does KC-video matching.  That is, it attempts to heuristically determing which videos are likely related to which KCs.  This mapping is output to the reference directory for later human reference.  Next, the script actually reformats the data, based on KC-Video mappings determined earlier, into a format easily parseable for the matlab analysis code.
 
 **Data Analysis**
+
 The matlab analysis code is somewhat more complex.  At an abstract level, the log data parsed by the python scripts is first loaded into memory, placed into structs organized by KC, and then decorated with some features that will be used later in the analysis pipeline.  Next, the code is split into five separate folds, under the condition that each containins a sufficient amount of data per KC/video in the dataset.  The data thus split is used for 5-fold cross validation, where for each fold of the data, models are first trained on 4/5 of the folds, then tested on the fifth, with the fold used for testing changing across each run.  The results of this process, a large collection of models and results including RMSE, are then used to present human-readable results.  Additionally, the models thus trained, the results, and the data itself are all left in memory for manual exploration.
 
 What follows is a more detailed outline about what is happening where in the code:
